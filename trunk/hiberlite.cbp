@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes" ?>
+<CodeBlocks_project_file>
+	<FileVersion major="1" minor="6" />
+	<Project>
+		<Option title="hiberlite" />
+		<Option pch_mode="2" />
+		<Option compiler="gcc" />
+		<Build>
+			<Target title="Debug">
+				<Option output="bin/Debug/hiberlite-test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Debug/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-g" />
+				</Compiler>
+				<Linker>
+					<Add option="-lsqlite3" />
+				</Linker>
+			</Target>
+			<Target title="Release">
+				<Option output="bin/Release/hiberlite-test" prefix_auto="1" extension_auto="1" />
+				<Option object_output="obj/Release/" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Compiler>
+					<Add option="-O2" />
+				</Compiler>
+				<Linker>
+					<Add option="-s" />
+				</Linker>
+			</Target>
+			<Target title="lib">
+				<Option output="libhiberlite" prefix_auto="1" extension_auto="1" />
+				<Option working_dir="" />
+				<Option type="2" />
+				<Option compiler="gcc" />
+				<Option createDefFile="1" />
+			</Target>
+		</Build>
+		<Compiler>
+			<Add option="-Wall" />
+			<Add option="-fexceptions" />
+			<Add directory="include" />
+		</Compiler>
+		<Unit filename="demo.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
+		</Unit>
+		<Unit filename="include/BeanLoader.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/BeanLoader_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/BeanUpdater.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/BeanUpdater_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/ChildKiller.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/ChildKiller_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/CppModel.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/Database.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/Database_tmpl_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/ModelExtractor.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/ModelExtractor_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/Registry.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/Registry_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/SQLiteStmt.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/UpdateVisitor_tmpl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/Visitor.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/Visitor_tmpl_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/bean_ptr.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/bean_ptr_impl.hpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/common.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/db_error.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/hiberdefs.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/hiberlite.h" />
+		<Unit filename="include/nvp.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/shared_res.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="include/some_types.h">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/BeanLoader.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/BeanUpdater.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/ChildKiller.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/CppModel.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/Database.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/ModelExtractor.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/Registry.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/SQLiteStmt.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/Visitor.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Unit filename="src/shared_res.cpp">
+			<Option target="lib" />
+		</Unit>
+		<Extensions>
+			<code_completion />
+			<envvars />
+			<debugger />
+		</Extensions>
+	</Project>
+</CodeBlocks_project_file>
