@@ -3,14 +3,9 @@
 
 = Introduction =
 
-Hiberlite basics explained - we will create a datababase, put user object and then try to read that object back.
+In this tutorial we will create an sqlite datababase, put user object in it and then try to read that object back.
 
 
 = Details =
 
 Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the trunk.
-
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
