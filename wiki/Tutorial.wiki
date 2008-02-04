@@ -43,6 +43,6 @@ HIBERLITE_EXPORT_CLASS(MyClass)
 
 Note the _friend_ declaration and the _hibernate(...)_ template method - these two pieces of code are necessary for hiberlite to access the internal structure of the user-defined class.
 
-HIBERLITE_NVP is a macro that creates a name-value pair with reference to its argument.
+*HIBERLITE_NVP* is a macro that creates a name-value pair with reference to its argument.
 
-HIBERLITE_EXPORT_CLASS(MyClass) is a macro that serves similar purpose to BOOST_CLASS_EXPORT. For now just use this macro for each your class containing _hibernate()_ method.
+*HIBERLITE_EXPORT_CLASS(MyClass)* is a macro that serves similar purpose to BOOST_CLASS_EXPORT. For now just use this macro for each your class containing _hibernate()_ method.
