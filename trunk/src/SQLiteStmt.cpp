@@ -1,5 +1,5 @@
 #include "hiberlite.h"
-#include <iostream>
+
 namespace hiberlite{
 
 SQLiteSelect::SQLiteSelect(shared_connection _con, std::string query) : con(_con)

@@ -61,11 +61,16 @@ class bean_ptr : public shared_res< real_bean<C> >
 		bean_ptr(const bean_ptr<C>& other);
 		bean_ptr<C>& operator=(const bean_ptr<C>& other);
 
-		void destroy() { (*this)->destroy(); }
-		bool destroyed() const { return (*this)->destroyed(); }
+		void destroy() {
+			shared_res< real_bean<C> >::get_object()->destroy();
+		}
+		bool destroyed() const {
+			return shared_res< real_bean<C> >::get_object()->destroyed();
+		}
 
 		inline sqlid_t get_id() const { return id; }
 		inline C& operator*();
+		inline C* operator->();
 };
 
 }//namespace hiberlite

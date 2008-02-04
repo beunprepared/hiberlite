@@ -24,7 +24,7 @@ class noncopyable
 
 typedef sqlite_int64 sqlid_t;
 
-#define HIBERLITE_HL_DBG_DO(x) x
+#define HIBERLITE_HL_DBG_DO(x) ;
 
 
 #endif

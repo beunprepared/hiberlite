@@ -16,6 +16,8 @@
 				</Compiler>
 				<Linker>
 					<Add option="-lsqlite3" />
+					<Add library="libhiberlite.a" />
+					<Add directory="/home/pako/sql/hiberlite.svn/" />
 				</Linker>
 			</Target>
 			<Target title="Release">
@@ -28,6 +30,8 @@
 				</Compiler>
 				<Linker>
 					<Add option="-s" />
+					<Add library="libhiberlite.a" />
+					<Add directory="/home/pako/sql/hiberlite.svn/" />
 				</Linker>
 			</Target>
 			<Target title="lib">
@@ -37,16 +41,23 @@
 				<Option compiler="gcc" />
 				<Option createDefFile="1" />
 			</Target>
+			<Target title="sample">
+				<Option output="sample" prefix_auto="1" extension_auto="1" />
+				<Option type="1" />
+				<Option compiler="gcc" />
+				<Option use_console_runner="0" />
+				<Linker>
+					<Add option="-lsqlite3" />
+					<Add library="libhiberlite.a" />
+					<Add directory="/home/pako/sql/hiberlite.svn/" />
+				</Linker>
+			</Target>
 		</Build>
 		<Compiler>
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 			<Add directory="include" />
 		</Compiler>
-		<Unit filename="demo.cpp">
-			<Option target="Debug" />
-			<Option target="Release" />
-		</Unit>
 		<Unit filename="include/BeanLoader.h">
 			<Option target="lib" />
 		</Unit>
@@ -113,7 +124,11 @@
 		<Unit filename="include/hiberdefs.h">
 			<Option target="lib" />
 		</Unit>
-		<Unit filename="include/hiberlite.h" />
+		<Unit filename="include/hiberlite.h">
+			<Option target="Debug" />
+			<Option target="Release" />
+			<Option target="lib" />
+		</Unit>
 		<Unit filename="include/nvp.h">
 			<Option target="lib" />
 		</Unit>
@@ -122,6 +137,9 @@
 		</Unit>
 		<Unit filename="include/some_types.h">
 			<Option target="lib" />
+		</Unit>
+		<Unit filename="sample.cpp">
+			<Option target="sample" />
 		</Unit>
 		<Unit filename="src/BeanLoader.cpp">
 			<Option target="lib" />
@@ -152,6 +170,10 @@
 		</Unit>
 		<Unit filename="src/shared_res.cpp">
 			<Option target="lib" />
+		</Unit>
+		<Unit filename="tests.cpp">
+			<Option target="Debug" />
+			<Option target="Release" />
 		</Unit>
 		<Extensions>
 			<code_completion />
