@@ -1,6 +1,5 @@
 
 #include "hiberlite.h"
-#include <iostream>
 
 namespace hiberlite{
 

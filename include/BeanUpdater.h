@@ -1,8 +1,6 @@
 #ifndef BEANUPDATER_H
 #define BEANUPDATER_H
 
-#include <sstream>
-
 namespace hiberlite{
 
 struct RowScope{

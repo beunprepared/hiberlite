@@ -3,28 +3,6 @@
 
 namespace hiberlite{
 
-/*/////////////////////////////////////////
-
-store bean:
-
-	update all children
-
-create Scope with bean_id
-
-create row for that bean put there an id
-
-hiberlite(archive, Scope) :
-
-	nvp<name,atom> int,string,float ->  put 1 column to the scope of name [name] & storage_class X
-	ref_nvp<name,X> -> add column with name [name] of type sqlid_t
-
-	coll_nvp<name, X > -> create child table [Scope+name], put parent ref there, put X model to that Scope
-
-	nvp<name,X> -> store to this Table with prefix=[prefix+name]
-
-*//////////////////////////////////////////
-
-
 class ModelExtractor;
 class UpdateBean;
 

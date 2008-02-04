@@ -94,9 +94,7 @@ public:
 	}
 
 	inline C* operator->(){
-		if(!res)
-			return NULL;
-		return res->getRes();
+		return get_object();
 	}
 
 	inline int get_ref_count(){

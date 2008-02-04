@@ -174,8 +174,8 @@ int main()
 {
 	Tester t;
 	try{
-		//t.test1();
-		//t.test2();
+		t.test1();
+		t.test2();
 		t.test3();
 	}catch(std::exception& e){
 		cerr << "caught exception\n";
