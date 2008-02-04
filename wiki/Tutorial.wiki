@@ -8,4 +8,4 @@ In this tutorial we will create an sqlite datababase, put user object in it and 
 
 = Details =
 
-Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the trunk.
+Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the svn repository.
