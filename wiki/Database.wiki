@@ -1,0 +1,13 @@
+#hiberlite::Database class description.
+
+= Introduction =
+
+*hiberlite::Database* represents a sqlite3 database.
+It is noncopyable.
+
+= Methods =
+Database class has the following usefull methods:
+  * {{{Database::Database(std::string filename)}}} - constructor, that calls {{{Database::open(filename)}}} after initialization.
+  * {{{Database::Database()}}} - constructor, user must call {{{Database::open(...)}}} to open a database file.
+  * {{{Database::open(std::string filename)}}} - open the sqlite3 database file
+  * {{{Database::registerBeanClass<Foo>()}}} - template method. Call it to notify that instances of the user-defined class "Foo" will be stored in this database.
