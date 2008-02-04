@@ -1,0 +1,11 @@
+#summary list and description of all the hiberlite classes and templates.
+
+= Introduction =
+
+All classes are placed in the *hiberlite* namespace.
+
+= Front-end =
+Users of the library will usually need only 3 classes:
+  * Database  - represents an sqlite3 database
+  * *sqlid_t* - type of all primary keys in the database
+  * *bean_ptr<C>* - template class, represents the smart (and lazy) pointer to the object in the database.
