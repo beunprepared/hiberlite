@@ -19,5 +19,30 @@ Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sam
   * Add the "-lhiberlite" flag to your linker options.
   * You will also need "-lsqlite3" .
 
-= Namespace =
-All hoberlite classes live under the *hiberlite* namespace.
+= User-defined class =
+
+First we define the classes we plan keep in our database:
+
+{{{
+class MyClass{
+        friend class hiberlite::access;
+        template<class Archive>
+        void hibernate(Archive & ar)
+        {
+                ar & HIBERLITE_NVP(a);
+                ar & HIBERLITE_NVP(b);
+                ar & HIBERLITE_NVP(vs);
+        }
+public:
+        int a,b;
+        vector<string> vs;
+};
+HIBERLITE_EXPORT_CLASS(MyClass)
+}}}
+
+
+Note the _friend_ declaration and the _hibernate(...)_ template method - these two pieces of code are necessary for hiberlite to access the internal structure of the user-defined class.
+
+HIBERLITE_NVP is a macro that creates a name-value pair with reference to its argument.
+
+HIBERLITE_EXPORT_CLASS(MyClass) is a macro that serves similar purpose to BOOST_CLASS_EXPORT. For now just use this macro for each your class containing _hibernate()_ method.
