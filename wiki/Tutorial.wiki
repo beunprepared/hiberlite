@@ -6,6 +6,18 @@
 In this tutorial we will create an sqlite datababase, put user object in it and then try to read that object back.
 
 
-= Details =
+= Source code  =
 
 Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the svn repository.
+
+= Usage =
+  * Download and install the library.
+  * In your code include the main header
+{{{
+#include "hiberlite.h"
+}}}
+  * Add the "-lhiberlite" flag to your linker options.
+  * You will also need "-lsqlite3" .
+
+= Namespace =
+All hoberlite classes live under the *hiberlite* namespace.
