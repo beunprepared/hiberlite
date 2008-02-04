@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#summary hiberlite basics - creating DB, saving and loading objects.
 #labels hiberlite,tutorial,documentation
 
 = Introduction =
