@@ -22,9 +22,6 @@ class Database : noncopyable
 		static void dbDelete(bean_key key, C& bean);
 
 		template<class C>
-		static void dbInsert(bean_key key, C& bean);
-
-		template<class C>
 		static void dbUpdate(bean_key key, C& bean);
 
 		template<class C>

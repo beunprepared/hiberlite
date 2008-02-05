@@ -115,6 +115,8 @@ struct Tester{
 	}
 	void test2(){
 		Database db("test.db");
+//	we will not create or drop tables, so model initialization
+//  is not necessary
 //		db.registerBeanClass<A>();
 //		db.registerBeanClass<B>();
 
