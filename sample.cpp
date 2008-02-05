@@ -25,9 +25,12 @@ HIBERLITE_EXPORT_CLASS(MyClass)
 void createDB()
 {
 	hiberlite::Database db("sample.db");
-	db.registerBeanClass<MyClass>();	//register classes
-	db.dropModel();		//drop all existing tables needed to store registered classes
-	db.createModel();	//create those tables again with proper schema
+	//register bean classes
+	db.registerBeanClass<MyClass>();
+	//drop all tables beans will use
+	db.dropModel();
+	//create those tables again with proper schema
+	db.createModel();
 
 	for(int i=0;i<5;i++) {
 		MyClass x;

@@ -22,7 +22,6 @@ void Database::open(std::string fname)
 	sqlite3* db=NULL;
 
 	try{
-
 		//TODO UTF-8 string
 		int rc=sqlite3_open(fname.c_str(), &db);
 		if(rc!=SQLITE_OK)

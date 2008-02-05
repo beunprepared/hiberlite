@@ -1,7 +1,6 @@
 #ifndef HIBERDEFS_H_INCLUDED
-//#define HIBERDEFS_H_INCLUDED
+#define HIBERDEFS_H_INCLUDED
 
-//TODO HIBERLITE_BASECLASS
 #define HIBERLITE_NVP(Field) hiberlite::sql_nvp< typeof(Field) >(#Field,Field)
 #define HIBERLITE_BASE_CLASS(ClName) hiberlite::sql_nvp< ClName >(#ClName,*((ClName*)this) )
 

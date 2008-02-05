@@ -4,12 +4,6 @@
 namespace hiberlite{
 
 template<class C>
-void Database::dbInsert(bean_key key, C& bean)
-{
-	//TODO dbInsert
-}
-
-template<class C>
 void Database::dbDelete(bean_key key, C& bean)
 {
 	ChildKiller ck;
