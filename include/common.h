@@ -11,6 +11,8 @@
 
 #include <sqlite3.h>
 
+namespace hiberlite{
+
 class noncopyable
 {
 	protected:
@@ -23,6 +25,8 @@ class noncopyable
 };
 
 typedef sqlite_int64 sqlid_t;
+
+} //namespace hiberlite
 
 #define HIBERLITE_HL_DBG_DO(x) ;
 

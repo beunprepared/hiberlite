@@ -13,7 +13,7 @@ template<class C>
 class shared_res;
 
 template<class C>
-class real_bean {
+class real_bean : noncopyable {
 	public:
 		inline C* operator->();
 		inline C* get();
@@ -35,8 +35,7 @@ class real_bean {
 	private:
 		friend class Registry<C>;
 		real_bean(const bean_key _key, C* _obj); //only Registry can create the real_bean
-		real_bean(const real_bean<C>& x);
-		real_bean<C>& operator=(const real_bean<C>& x); //must never be called?
+		//real_bean(const real_bean<C>& x);
 };
 
 template<class C>
