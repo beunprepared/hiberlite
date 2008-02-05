@@ -46,6 +46,14 @@ Note the _friend_ declaration and the _hibernate(...)_ template method - these t
 
 *HIBERLITE_NVP* is a macro that creates a name-value pair with reference to its argument.
 
-*HIBERLITE_EXPORT_CLASS(MyClass)* is a macro that serves similar purpose to BOOST_CLASS_EXPORT. For now just use this macro for each your class containing _hibernate()_ method.
+*HIBERLITE_EXPORT_CLASS()* is a macro that serves similar purpose to BOOST_CLASS_EXPORT. For now just use this macro for each your class containing _hibernate()_ method.
 
-= Database =
+= Creating a database =
+We create a database file and some tables in it with
+{{{
+       hiberlite::Database db("sample.db");
+       db.registerBeanClass<MyClass>();
+       db.dropModel();
+       db.createModel();
+}}}
+Every instance of the [Database] class has its own schema. _registerBeanClass<MyClass>()_ template method adds tables, needed to store MyClass objects to that model.
