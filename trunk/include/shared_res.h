@@ -5,7 +5,7 @@ template<class C>
 class shared_res;
 
 template<class C>
-class shared_cnt_obj_pair{
+class shared_cnt_obj_pair : noncopyable {
 private:
 	friend class shared_res<C>;
 

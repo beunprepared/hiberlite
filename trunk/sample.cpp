@@ -15,13 +15,12 @@ class MyClass{
 		ar & HIBERLITE_NVP(vs);
 	}
 public:
-	int a,b;
+	int a;
+	double b;
 	vector<string> vs;
 };
 
 HIBERLITE_EXPORT_CLASS(MyClass)
-
-sqlid_t objId;
 
 void createDB()
 {
@@ -30,14 +29,15 @@ void createDB()
 	db.dropModel();		//drop all existing tables needed to store registered classes
 	db.createModel();	//create those tables again with proper schema
 
-	MyClass x;
-	x.a=100; x.b=200;
-	x.vs.push_back("Hello");
-	x.vs.push_back("world");
-	x.vs.push_back("!");
+	for(int i=0;i<5;i++) {
+		MyClass x;
+		x.a=i*10; x.b=1.0/(i+1);
+		x.vs.push_back("Hello");
+		x.vs.push_back("world");
+		x.vs.push_back("!");
 
-	hiberlite::bean_ptr<MyClass> p=db.copyBean(x);	//create a managed copy of the object in the database
-	objId=p.get_id();
+		hiberlite::bean_ptr<MyClass> p=db.copyBean(x);	//create a managed copy of the object in the database
+	}
 }
 
 void loadData()
@@ -45,12 +45,15 @@ void loadData()
 	hiberlite::Database db("sample.db");
 	db.registerBeanClass<MyClass>();
 
-	hiberlite::bean_ptr<MyClass> p = db.loadBean<MyClass>(objId);
-	cout << "x.a=" << p->a << "\n";
-	cout << "x.b=" << p->b << "\n";
+	vector< hiberlite::bean_ptr<MyClass> > v=db.getAllBeans<MyClass>();
+
+	cout << "found " << v.size() << " objects in the database\nhere's the first one:\n";
+
+	cout << "x.a=" << v[0]->a << "\n";
+	cout << "x.b=" << v[0]->b << "\n";
 	cout << "x.vs={";
-	for(size_t i=0;i<p->vs.size();i++)
-		i && cout << ", ", cout << p->vs[i];
+	for(size_t i=0;i<v[0]->vs.size();i++)
+		i && cout << ", ", cout << v[0]->vs[i];
 	cout << "}\n";
 
 }
