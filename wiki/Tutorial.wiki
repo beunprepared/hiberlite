@@ -21,7 +21,7 @@ Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sam
 
 = User-defined class =
 
-First we define the classes we plan keep in our database:
+First we define the classes we plan to store in the database:
 
 {{{
 class MyClass{
@@ -34,7 +34,8 @@ class MyClass{
                 ar & HIBERLITE_NVP(vs);
         }
 public:
-        int a,b;
+        int a;
+        double b;
         vector<string> vs;
 };
 HIBERLITE_EXPORT_CLASS(MyClass)
@@ -46,3 +47,5 @@ Note the _friend_ declaration and the _hibernate(...)_ template method - these t
 *HIBERLITE_NVP* is a macro that creates a name-value pair with reference to its argument.
 
 *HIBERLITE_EXPORT_CLASS(MyClass)* is a macro that serves similar purpose to BOOST_CLASS_EXPORT. For now just use this macro for each your class containing _hibernate()_ method.
+
+= Database =
