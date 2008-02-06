@@ -48,6 +48,8 @@ void loadData()
 	hiberlite::Database db("sample.db");
 	db.registerBeanClass<MyClass>();
 
+	cout << "reading the DB\n";
+
 	vector< hiberlite::bean_ptr<MyClass> > v=db.getAllBeans<MyClass>();
 
 	cout << "found " << v.size() << " objects in the database\nhere's the first one:\n";
@@ -58,12 +60,14 @@ void loadData()
 	for(size_t i=0;i<v[0]->vs.size();i++)
 		i && cout << ", ", cout << v[0]->vs[i];
 	cout << "}\n";
-
+	cout << "now will destroy it.\n";
+	v[0].destroy();
 }
 
 int main()
 {
 	createDB();
+	loadData();
 	loadData();
 	return 0;
 }
