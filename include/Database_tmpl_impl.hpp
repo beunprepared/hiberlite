@@ -61,9 +61,7 @@ inline bean_ptr<C> Database::manageBean(C* ptr)
 template<class C>
 inline bean_ptr<C> Database::loadBean(sqlid_t id)
 {
-	bean_key key(con,id);
-	C* ptr=dbLoad<C>(key);
-	return Registry<C>::createBeanPtr(key,ptr);
+	return Registry<C>::get( bean_key(con,id) );
 }
 
 template<class C>
