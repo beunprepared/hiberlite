@@ -21,7 +21,7 @@ Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sam
 
 = User-defined class =
 
-First we define the classes we plan to store in the database:
+First we define the class we plan to store in the database:
 
 {{{
 class MyClass{
@@ -46,14 +46,65 @@ Note the _friend_ declaration and the _hibernate(...)_ template method - these t
 
 *HIBERLITE_NVP* is a macro that creates a name-value pair with reference to its argument.
 
-*HIBERLITE_EXPORT_CLASS()* is a macro that serves similar purpose to BOOST_CLASS_EXPORT. For now just use this macro for each your class containing _hibernate()_ method.
+*HIBERLITE_EXPORT_CLASS()* defines the root table name for the class. More on this later.
+
+= How is it stored =
+
+hiberlite will use 2 tables to represent MyClass instances in the database:
+{{{
+CREATE TABLE MyClass 
+(
+    a INTEGER,
+    b REAL,
+    hiberlite_id INTEGER PRIMARY KEY AUTOINCREMENT
+)
+CREATE TABLE MyClass_vs_items 
+(
+    hiberlite_entry_indx INTEGER,
+    hiberlite_id INTEGER PRIMARY KEY AUTOINCREMENT,
+    hiberlite_parent_id INTEGER,
+    item TEXT
+)
+}}}
+
+Table *MyClass* is the root table for MyClass. It will contain one row per object. Columns *a* and *b* store values of the corresponding *int* and *double* fields.
+
+_HIBERLITE_EXPORT_CLASS(MyClass)_ macro simply declares that instances of MyClass must be stored int the *MyClass* root table and its subtables.
+
+*MyClass_vs_items* table is the "subtable" of *MyClass*. It is used to store elements of the *vs* vector: *hiberlite_parent_id* references the *hiberlite_id* of the root table, *hiberlite_entry_indx* - is the zero-index of the string element of the vector, and *item* is the value of that element.
+
 
 = Creating a database =
-We create a database file and some tables in it with
+We create a database file and some tables with
 {{{
        hiberlite::Database db("sample.db");
        db.registerBeanClass<MyClass>();
        db.dropModel();
        db.createModel();
 }}}
-Every instance of the [Database] class has its own schema. _registerBeanClass<MyClass>()_ template method adds tables, needed to store MyClass objects to that model.
+Every instance of the [Database] class maintains its own database schema, I call it the data model or simply model. _registerBeanClass<MyClass>()_ template method adds tables, needed to store MyClass objects (which are the *MyClass* and *MyClass_vs_items*) to that model.
+
+_dropModel()_ calls "DROP TABLE IF EXISTS ..." for each table that presents in the model.
+
+_createModel()_ calls "CREATE TABLE ..." for each table.
+
+= Storing data =
+After opening the database and (optionally) creating the tables we are ready to put some data in it.
+Objects in the database are called *beans*.
+To add a new bean to the database we call
+{{{
+hiberlite::bean_ptr<MyClass> p=db.copyBean(x);
+}}}
+_copyBean()_ creates an internal copy of its argument (using copy-constructor {{{new MyClass(x)}}}), saves it in the database and returns a [bean_ptr], pointing to that copy. bean_ptr is a smart-pointer, it will perform reference-counting and care about saving and destroying your bean when it is no longer in use. But the object will not disappear - it is stored in the database, and the only way to remove it is to call *bean_ptr<C>::destroy()*.
+There are two other ways to create a bean in the database:
+  * _bean_ptr<C> Database::createBean<C>()_ creates a bean using default constructor and returns a 
+  * _bean_ptr<C> Database::manageBean<C>(C\* ptr)_ takes control over its argument and wraps it in the bean_ptr. You must not call _delete ptr;_ after calling _manageBean(ptr)_ - *bean_ptr* will do it when necessary.
+
+= Loading data =
+We load all the beans with
+{{{
+std::vector< hiberlite::bean_ptr<MyClass> > v=db.getAllBeans<MyClass>();
+}}}
+*bean_ptr<C>* is a smart pointer, but I forgot to mention that it is also a lazy pointer.
+Beans itself are not loaded when with _getAllBeans<MyClass>()_ - only their primary keys.
+To give user the access to the underlying object, *C\* bean_ptr<C>::operator->()* is overloaded. The object will be created and fetched from the database with the first use of _operator->_.
