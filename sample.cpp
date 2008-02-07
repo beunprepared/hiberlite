@@ -5,62 +5,65 @@
 #include <iostream>
 using namespace std;
 
-class MyClass{
+class Person{
 	friend class hiberlite::access;
 	template<class Archive>
 	void hibernate(Archive & ar)
 	{
-		ar & HIBERLITE_NVP(a);
-		ar & HIBERLITE_NVP(b);
-		ar & HIBERLITE_NVP(vs);
+		ar & HIBERLITE_NVP(name);
+		ar & HIBERLITE_NVP(age);
+		ar & HIBERLITE_NVP(bio);
 	}
 public:
-	int a;
-	double b;
-	vector<string> vs;
+	string name;
+	int age;
+	vector<string> bio;
 };
 
-HIBERLITE_EXPORT_CLASS(MyClass)
+HIBERLITE_EXPORT_CLASS(Person)
 
 void createDB()
 {
 	hiberlite::Database db("sample.db");
 	//register bean classes
-	db.registerBeanClass<MyClass>();
+	db.registerBeanClass<Person>();
 	//drop all tables beans will use
 	db.dropModel();
 	//create those tables again with proper schema
 	db.createModel();
 
-	for(int i=0;i<5;i++) {
-		MyClass x;
-		x.a=i*10; x.b=1.0/(i+1);
-		x.vs.push_back("Hello");
-		x.vs.push_back("world");
-		x.vs.push_back("!");
+	char* names[5]={"Stanley Marsh", "Kyle Broflovski", "Eric Theodore Cartman", "Kenneth McCormick", "Leopold Stotch"};
 
-		hiberlite::bean_ptr<MyClass> p=db.copyBean(x);	//create a managed copy of the object in the database
+	for(int i=0;i<5;i++) {
+		Person x;
+		x.name=names[i%5];
+		x.age=21+2*i;
+		x.bio.push_back("Hello");
+		x.bio.push_back("world");
+		x.bio.push_back("!");
+
+		hiberlite::bean_ptr<Person> p=db.copyBean(x);	//create a managed copy of the object in the database
 	}
 }
 
 void loadData()
 {
 	hiberlite::Database db("sample.db");
-	db.registerBeanClass<MyClass>();
+	db.registerBeanClass<Person>();
 
 	cout << "reading the DB\n";
 
-	vector< hiberlite::bean_ptr<MyClass> > v=db.getAllBeans<MyClass>();
+	vector< hiberlite::bean_ptr<Person> > v=db.getAllBeans<Person>();
 
-	cout << "found " << v.size() << " objects in the database\nhere's the first one:\n";
+	cout << "found " << v.size() << " persons in the database\nhere's the first one:\n";
 
-	cout << "x.a=" << v[0]->a << "\n";
-	cout << "x.b=" << v[0]->b << "\n";
-	cout << "x.vs={";
-	for(size_t i=0;i<v[0]->vs.size();i++)
-		i && cout << ", ", cout << v[0]->vs[i];
+	cout << "name=" << v[0]->name << "\n";
+	cout << "age=" << v[0]->age << "\n";
+	cout << "bio={";
+	for(size_t i=0;i<v[0]->bio.size();i++)
+		i && cout << ", ", cout << v[0]->bio[i];
 	cout << "}\n";
-	cout << "now will destroy it.\n";
+	cout << v[0]->name << " will be deleted.\n\n";
 	v[0].destroy();
 }
 

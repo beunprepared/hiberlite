@@ -25,7 +25,7 @@ void Database::open(std::string fname)
 		//TODO UTF-8 string
 		int rc=sqlite3_open(fname.c_str(), &db);
 		if(rc!=SQLITE_OK)
-			throw std::runtime_error( std::string("database error: ")+sqlite3_errmsg(db));
+			throw database_error( std::string("database error: ")+sqlite3_errmsg(db) );
 		con=shared_connection(new autoclosed_con(db));
 
 	}catch(std::runtime_error e){
