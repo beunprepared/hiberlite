@@ -3,21 +3,78 @@
 
 = Introduction =
 
-In this tutorial we will create an sqlite datababase, put user object in it and then try to read that object back.
+In this tutorial we will create an sqlite database, put a user object in it and then try to read that object back.
 
-
-= Source code  =
-
-Complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the svn repository.
-
-= Usage =
+= Setup =
   * Download and install the library.
-  * In your code include the main header
+  * Include the header
 {{{
 #include "hiberlite.h"
 }}}
-  * Add the "-lhiberlite" flag to your linker options.
-  * You will also need "-lsqlite3" .
+  * Add the "-lhiberlite" flag to the linker options.
+  * also link the sqlite library "-lsqlite3" .
+
+
+= Source code  =
+The complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the svn repository.
+
+= Basic usage =
+To write a typical RDBMS application the following tasks should be implemented:
+  # Open a database
+  # Create necessary tables to represent it
+  # Populate the tables with data
+  # Load and/or modify that data
+Hiberlite greatly reduces the implementation of each of these tasks.
+
+== Creating a database ==
+To open a database file simply write
+{{{
+       hiberlite::Database db;
+       db.open("test.db");
+}}}
+_Database::open(std::string filename)_ opens a sqlite3 file. If it doesn't exist it will be created.
+Another constructor is provided to simplify this:
+{{{
+       hiberlite::Database db("test.db");
+}}}
+
+== Creating tables ==
+In C++ You deal with classes and objects. You know *what* objects You want to store in the database. And hiberlite will figure out *how* to store that data.
+
+First You must prepare the data classes for use with hiberlite.
+Suppose we develop a social-network application. So we define a person as:
+{{{
+class Person{
+public:
+        string name;
+        int age;
+        vector<string> bio;
+};
+}}}
+Now to let hiberlite know about the internal structure of this class, we add an access method and an export declaration:
+{{{
+class Person{
+	friend class hiberlite::access;
+	template<class Archive>
+	void hibernate(Archive & ar)
+	{
+		ar & HIBERLITE_NVP(name);
+		ar & HIBERLITE_NVP(age);
+		ar & HIBERLITE_NVP(bio);
+	}
+public:
+	string name;
+	int age;
+	vector<string> bio;
+};
+HIBERLITE_EXPORT_CLASS(Person)
+}}}
+
+Inside the _hibernate(Archive & ar)_ method we list all the data fields, that will be stored in the database. 
+Macro _HIBERLITE_EXPORT_CLASS(Person)_ is invoked to declare a class name.
+
+After those easy modifications hiberlite is able to map the Person to a database tables.
+
 
 = User-defined class =
 
