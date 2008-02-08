@@ -98,7 +98,7 @@ db.dropModel();
 db.createModel();
 }}}
 _createModel()_ does several "CREATE TABLE ..." queries.
-_dropModel()_ cleans the database - does several "DROP TABLE IF EXISTS ...". In the sample  it is used to destroy the old tables (from probably obsolete scheme) when calling _createModel()_.
+_dropModel()_ cleans the database - does a "DROP TABLE IF EXISTS" query for each table in the schema. It is used to destroy the old tables (from probably obsolete scheme) when calling _createModel()_.
 
 == Saving data ==
 
