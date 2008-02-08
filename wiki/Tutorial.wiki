@@ -16,7 +16,7 @@ In this tutorial we will create an sqlite database, put a user object in it and 
 
 
 = Source code  =
-The complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source_code] for this tutorial is available in the svn repository.
+The complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the svn repository.
 
 = Basic usage =
 To write a typical RDBMS application the following tasks should be implemented:
@@ -76,7 +76,7 @@ Macro _HIBERLITE_EXPORT_CLASS(Person)_ is invoked to declare a class name. For n
 
 At this point hiberlite is able to map the Person to a database.
 
-== Creating tables ==
+=== Creating tables ===
 Database schema for hiberlite is simply a set of classes, that are stored in the database.  A programmer defines that set of classes, and hiberlite determines the needed tables and their columns.
 
 Each instance of _hiberlite::Database_ maintains its own copy of the database schema (set of data classes). To insert a new class to that set, use _registerBeanClass_ template method:
@@ -84,7 +84,24 @@ Each instance of _hiberlite::Database_ maintains its own copy of the database sc
 db.registerBeanClass<Person>();
 }}}
 
-To store several 
+In most applications several classes are stored in one database - so usually You will call _registerBeanClass_ several times:
+{{{
+Database db("gmail2.0.db");
+db.registerBeanClass<UserAccount>();
+db.registerBeanClass<Letter>();
+db.registerBeanClass<Attachment>();
+}}}
+
+When the classes are registered, hiberlite::Database can create tables:
+{{{
+db.dropModel();
+db.createModel();
+}}}
+_createModel()_ does several "CREATE TABLE ..." queries.
+_dropModel()_ cleans the database - does several "DROP TABLE IF EXISTS ...". In the sample  it is used to destroy the old tables (from probably obsolete scheme) when calling _createModel()_.
+
+== Saving data ==
+
 
 
 = User-defined class =
