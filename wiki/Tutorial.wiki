@@ -16,14 +16,14 @@ In this tutorial we will create an sqlite database, put a user object in it and 
 
 
 = Source code  =
-The complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source code] for this tutorial is available in the svn repository.
+The complete and working [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp source_code] for this tutorial is available in the svn repository.
 
 = Basic usage =
 To write a typical RDBMS application the following tasks should be implemented:
   # Open a database
-  # Create necessary tables to represent it
+  # Create database schema
   # Populate the tables with data
-  # Load and/or modify that data
+  # Read and/or modify that data
 Hiberlite greatly reduces the implementation of each of these tasks.
 
 == Creating a database ==
@@ -38,9 +38,10 @@ Another constructor is provided to simplify this:
        hiberlite::Database db("test.db");
 }}}
 
-== Creating tables ==
+== Creating database schema ==
 In C++ You deal with classes and objects. You know *what* objects You want to store in the database. And hiberlite will figure out *how* to store that data.
 
+=== Defining data model ===
 First You must prepare the data classes for use with hiberlite.
 Suppose we develop a social-network application. So we define a person as:
 {{{
@@ -71,9 +72,19 @@ HIBERLITE_EXPORT_CLASS(Person)
 }}}
 
 Inside the _hibernate(Archive & ar)_ method we list all the data fields, that will be stored in the database. 
-Macro _HIBERLITE_EXPORT_CLASS(Person)_ is invoked to declare a class name.
+Macro _HIBERLITE_EXPORT_CLASS(Person)_ is invoked to declare a class name. For now just remember to invoke it once per class in your project. (Placing it in Person.cpp is a good idea)
 
-After those easy modifications hiberlite is able to map the Person to a database tables.
+At this point hiberlite is able to map the Person to a database.
+
+== Creating tables ==
+Database schema for hiberlite is simply a set of classes, that are stored in the database.  A programmer defines that set of classes, and hiberlite determines the needed tables and their columns.
+
+Each instance of _hiberlite::Database_ maintains its own copy of the database schema (set of data classes). To insert a new class to that set, use _registerBeanClass_ template method:
+{{{
+db.registerBeanClass<Person>();
+}}}
+
+To store several 
 
 
 = User-defined class =
