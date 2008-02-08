@@ -42,7 +42,7 @@ void createDB()
 		x.bio.push_back("world");
 		x.bio.push_back("!");
 
-		hiberlite::bean_ptr<Person> p=db.copyBean(x);	//create a managed copy of the object in the database
+		hiberlite::bean_ptr<Person> p=db.copyBean(x);	//create a managed copy of the object
 	}
 }
 
