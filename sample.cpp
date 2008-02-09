@@ -16,7 +16,7 @@ class Person{
 	}
 public:
 	string name;
-	int age;
+	double age;
 	vector<string> bio;
 };
 
@@ -37,7 +37,7 @@ void createDB()
 	for(int i=0;i<5;i++) {
 		Person x;
 		x.name=names[i%5];
-		x.age=21+2*i;
+		x.age=14+i*0.1;
 		x.bio.push_back("Hello");
 		x.bio.push_back("world");
 		x.bio.push_back("!");
