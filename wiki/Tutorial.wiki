@@ -65,7 +65,7 @@ class Person{
 	}
 public:
 	string name;
-	int age;
+	double age;
 	vector<string> bio;
 };
 HIBERLITE_EXPORT_CLASS(Person)
@@ -131,11 +131,33 @@ Another way to create a bean is to use `createBean()` template method:
 There are several methods to query the database:
 `bean_ptr<C> Database::loadBean(sqlid_t id)` - loads the bean with the given id.
 
+{{{
+    bean_ptr<Person> p=db.loadBean<Person>(1);
+    cout << "first person is " << p->name << endl;
+}}}
+In this case object itself is not loaded, when `bean_ptr` is returned. `bean_ptr` is a lazy pointer, so the wrapped object will be loaded when first needed. In this example `Person` will be loaded later, when we try to access the `name` field.
 
+`std::vector< bean_ptr<C> > Database::getAllBeans()` - returns a vector with all the beans of a given class C.
+{{{
+    vector< bean_ptr<Person> > v=db.getAllBeans<Person>();
+    cout << "found " << v.size() << " persons in the database\n";
+}}}
+In this example objects are not loaded at all.
 
+You can load the same object more than once - all the returned `bean_ptr`'s will point the same bean.
 
+== Deleting beans ==
+To remove an object from the database, call `bean_ptr::destroy()`:
+{{{
+    bean_ptr<Person> p==db.loadBean<Person>(1);
+    p.destroy();
+    if(!p.destroyed())
+        throw std::runtime_error("bug found. report issue please");
+}}}
 
-
+= Examples = 
+All the above code is put together in [http://code.google.com/p/hiberlite/source/browse/trunk/sample.cpp sample.cpp].
+For more demonstration see the poor-mans unit tests : [http://code.google.com/p/hiberlite/source/browse/trunk/tests.cpp tests.cpp].
 
 
 = User-defined class =
