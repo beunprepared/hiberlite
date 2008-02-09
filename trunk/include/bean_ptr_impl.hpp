@@ -23,6 +23,7 @@ void real_bean<C>::destroy() {
 	delete obj;
 	forgotten=true;
 	obj=NULL;
+	key.id=Database::NULL_ID;
 }
 
 template<class C>
@@ -107,6 +108,12 @@ C& bean_ptr<C>::operator*() {
 template<class C>
 C* bean_ptr<C>::operator->() {
 	return shared_res< real_bean<C> >::get_object()->get();
+}
+
+template<class C>
+void bean_ptr<C>::destroy() {
+	shared_res< real_bean<C> >::get_object()->destroy();
+	id=Database::NULL_ID;
 }
 
 } //namespace hiberlite

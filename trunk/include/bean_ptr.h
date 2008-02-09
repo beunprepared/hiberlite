@@ -60,9 +60,8 @@ class bean_ptr : public shared_res< real_bean<C> >
 		bean_ptr(const bean_ptr<C>& other);
 		bean_ptr<C>& operator=(const bean_ptr<C>& other);
 
-		void destroy() {
-			shared_res< real_bean<C> >::get_object()->destroy();
-		}
+		void destroy();
+
 		bool destroyed() const {
 			return shared_res< real_bean<C> >::get_object()->destroyed();
 		}
