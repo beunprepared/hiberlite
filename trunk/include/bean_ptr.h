@@ -62,11 +62,11 @@ class bean_ptr : public shared_res< real_bean<C> >
 
 		void destroy();
 
-		bool destroyed() const {
+		bool destroyed() {
 			return shared_res< real_bean<C> >::get_object()->destroyed();
 		}
 
-		inline sqlid_t get_id() const { return id; }
+		inline sqlid_t get_id();
 		inline C& operator*();
 		inline C* operator->();
 };

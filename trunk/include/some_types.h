@@ -29,8 +29,8 @@ class stl_stream_adapter{
 		}
 };
 
-template<class A, class E, class Allocator>
-void hibernate(A& ar, std::vector<E, Allocator>& v, const unsigned int)
+template<class A, class E>
+void hibernate(A& ar, std::vector<E>& v, const unsigned int)
 {
 	collection_nvp<E,stl_stream_adapter<E,std::vector<E> > > body( "items", stl_stream_adapter<E,std::vector<E> >(v) );
 	ar & body;
@@ -100,17 +100,6 @@ void hibernate(A& ar, std::map<Key,Data>& m, const unsigned int)
 			body( "items", stl_map_adapter<Key,Data>(m) );
 	ar & body;
 }
-
-/*template<class A>
-void hibernate(A& ar, int& value, const unsigned int)
-	{	ar & db_atom<int>(value);	}
-template<> std::string db_atom<int>::sqliteStorageClass()
-	{	return "INTEGER";	}
-template<> template<class Stmt,class Arg> void db_atom<int>::loadValue(Stmt& res, Arg& arg)
-	{	val=res.get_int(arg);	}
-template<> void db_atom<int>::bindValue(sqlite3_stmt* stmt, int col)
-	{	sqlite3_bind_int(stmt,col,val);	}
-*/
 
 #define HIBERLITE_DEF_DB_ATOM(T, GetFromDB, PutToDB, StorClass) \
 template<class A> void hibernate(A& ar, T& value, const unsigned int)	\

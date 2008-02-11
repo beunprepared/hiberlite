@@ -59,7 +59,7 @@ void AVisitor<C>::startWalk(Y& obj, bean_key key)
 template<class C> template<class Y>
 void AVisitor<C>::walk(Y& obj)
 {
-	hibernate(*this, obj, static_cast<unsigned int>(0));
+	hibernate(*this, obj, static_cast<const unsigned int>(0));
 }
 
 template<class C> template<class X>
