@@ -43,7 +43,7 @@ class Transformer{
 			s[i--]=0;					\
 			VALTYPE tmp=val;			\
 			bool needmin=0;				\
-			if(tmp<0)					\
+			if(tmp<(VALTYPE)0)					\
 				needmin=1,tmp*=-1;		\
 			do{							\
 				s[i--]='0' + (tmp%10);	\
@@ -56,10 +56,23 @@ class Transformer{
 HIBERLITE_STRINGIFY_NUM(int)
 HIBERLITE_STRINGIFY_NUM(unsigned int)
 HIBERLITE_STRINGIFY_NUM(char)
-HIBERLITE_STRINGIFY_NUM(unsigned char)
+//HIBERLITE_STRINGIFY_NUM(unsigned char)
 HIBERLITE_STRINGIFY_NUM(long long int)
 HIBERLITE_STRINGIFY_NUM(unsigned long long int)
 #undef HIBERLITE_STRINGIFY_NUM
+
+		static std::string toSQLiteValue(const unsigned char &val){
+			char s[64];
+			int i=63;
+			s[i--]=0;
+			unsigned char tmp=val;
+			do{
+				s[i--]='0' + (tmp%10);
+				tmp/=10;
+			}while(tmp);
+			return s+i+1;
+		}
+
 
 		static std::string toSQLiteValue(const char* val){
 			int n=strlen(val);

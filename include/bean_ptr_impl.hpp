@@ -116,4 +116,11 @@ void bean_ptr<C>::destroy() {
 	id=Database::NULL_ID;
 }
 
+template<class C>
+sqlid_t bean_ptr<C>::get_id() {
+	if(id!=Database::NULL_ID && destroyed())
+		return Database::NULL_ID;
+	return id;
+}
+
 } //namespace hiberlite

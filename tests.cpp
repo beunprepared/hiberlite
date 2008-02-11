@@ -174,11 +174,13 @@ struct Tester{
 
 int main()
 {
-	Tester t;
 	try{
-		t.test1();
-		t.test2();
-		t.test3();
+		{
+			Tester t;
+			t.test1();
+			t.test2();
+			t.test3();
+		}
 		cout << "tests passed\n";
 	}catch(std::exception& e){
 		cerr << "caught exception\n";
