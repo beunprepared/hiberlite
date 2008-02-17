@@ -96,15 +96,15 @@ bean_ptr<C>::operator bool() const {
 template<class C> template<class Archive>
 void bean_ptr<C>::hibernate(Archive & ar)
 {
-	sqlid_t id=get_id();
+	tmp_id=get_id();
 
-	if(id!=Database::NULL_ID
+	if(tmp_id!=Database::NULL_ID
 			&& ar.getConnection()!=shared_res< real_bean<C> >::get_object()->get_key().con)
 		throw std::logic_error("saving the bean from different database");
 
-	ar & hiberlite::sql_nvp< sqlid_t > ("id", id );
+	ar & hiberlite::sql_nvp< sqlid_t > ("id", tmp_id );
 	if(ar.is_loading())
-		*this=Registry<C>::get( bean_key(ar.getConnection(), id) );
+		*this=Registry<C>::get( bean_key(ar.getConnection(), tmp_id) );
 }
 
 template<class C>

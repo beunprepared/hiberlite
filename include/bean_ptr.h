@@ -47,6 +47,8 @@ class bean_ptr : public shared_res< real_bean<C> >
 	friend class Registry<C>;
 	bean_ptr(bean_key k, real_bean<C>* rb);
 
+	sqlid_t tmp_id;
+
 	public:
 		bean_ptr(bean_key k);
 
