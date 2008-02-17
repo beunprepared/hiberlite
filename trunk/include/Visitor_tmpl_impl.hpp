@@ -104,7 +104,7 @@ template<class C>
 void AVisitor<C>::popScope()
 {
 	if(!stack.size())
-		throw std::underflow_error( __PRETTY_FUNCTION__ );
+		throw std::runtime_error("popScope with empty stack");
 	scope=stack.top();
 	stack.pop();
 }

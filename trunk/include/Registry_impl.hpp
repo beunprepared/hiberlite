@@ -37,4 +37,12 @@ bool Registry<C>::has(const bean_key key)
 	return beans.find(key)!=beans.end();
 }
 
+template<class C>
+void Registry<C>::dying(bean_key key){
+/*TODO	if(!has(key))
+		throw std::logic_error("unknown key death reported");
+	if(get(key).get_ref_count()==2) // the only users are the Registry itself and the method caller, which is being destroyed now
+		beans.erase(key);*/
+}
+
 } // namespace hiberlite

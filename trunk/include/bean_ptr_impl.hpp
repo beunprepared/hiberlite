@@ -56,11 +56,11 @@ inline void real_bean<C>::loadLazy()
 }
 
 template<class C>
-bean_ptr<C>::bean_ptr(bean_key k, real_bean<C>* rb) : shared_res< real_bean<C> >(rb), id(k.id)
+bean_ptr<C>::bean_ptr(bean_key k, real_bean<C>* rb) : shared_res< real_bean<C> >(rb)
 {}
 
 template<class C>
-bean_ptr<C>::bean_ptr(const bean_ptr<C>& other) : shared_res< real_bean<C> >(other), id(other.id)
+bean_ptr<C>::bean_ptr(const bean_ptr<C>& other) : shared_res< real_bean<C> >(other)
 {
 }
 
@@ -68,29 +68,36 @@ template<class C>
 bean_ptr<C>& bean_ptr<C>::operator=(const bean_ptr<C>& other)
 {
 	shared_res< real_bean<C> >::operator=( other );
-	id=other.id;
 	return *this;
 }
 
 template<class C>
-bean_ptr<C>::bean_ptr(bean_key k) : id(k.id)
+bean_ptr<C>::bean_ptr(bean_key k)
 {
 	*this=Registry<C>::get(k);
 }
 
 template<class C>
-bean_ptr<C>::bean_ptr() : id(Database::NULL_ID)
+bean_ptr<C>::bean_ptr()
 {
 }
 
 template<class C>
+bean_ptr<C>::~bean_ptr(){
+	if( shared_res< real_bean<C> >::get_object() )
+		Registry<C>::dying( shared_res< real_bean<C> >::get_object()->get_key() );
+}
+
+template<class C>
 bean_ptr<C>::operator bool() const {
-	return id!=Database::NULL_ID;
+	return get_id()!=Database::NULL_ID;
 }
 
 template<class C> template<class Archive>
 void bean_ptr<C>::hibernate(Archive & ar)
 {
+	sqlid_t id=get_id();
+
 	if(id!=Database::NULL_ID
 			&& ar.getConnection()!=shared_res< real_bean<C> >::get_object()->get_key().con)
 		throw std::logic_error("saving the bean from different database");
@@ -113,14 +120,13 @@ C* bean_ptr<C>::operator->() {
 template<class C>
 void bean_ptr<C>::destroy() {
 	shared_res< real_bean<C> >::get_object()->destroy();
-	id=Database::NULL_ID;
 }
 
 template<class C>
 sqlid_t bean_ptr<C>::get_id() {
-	if(id!=Database::NULL_ID && destroyed())
+	if( !shared_res< real_bean<C> >::get_object() )
 		return Database::NULL_ID;
-	return id;
+	return shared_res< real_bean<C> >::get_object()->get_key().id;
 }
 
 } //namespace hiberlite

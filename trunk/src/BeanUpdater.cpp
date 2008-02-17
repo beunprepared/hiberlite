@@ -63,7 +63,7 @@ void UpdateBean::commitRow(shared_connection con, sqlid_t rowid)
 
 
 	if(!rowStack.size())
-		throw std::underflow_error("UpdateVisitor: commit row, but no row started");
+		throw std::logic_error("UpdateVisitor: commit row, but no row started");
 
 	rowStack.pop();
 }
