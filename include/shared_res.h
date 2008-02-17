@@ -75,7 +75,7 @@ public:
 		takeRes(x.res);
 	}
 
-	inline ~shared_res(){
+	inline virtual ~shared_res(){
 		freeRes();
 	}
 

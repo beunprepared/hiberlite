@@ -18,6 +18,8 @@ class Registry{
 		static bool has(const bean_key key);
 
 		static bean_ptr<C> createBeanPtr(bean_key key, C* obj);
+
+		static void dying(bean_key key);
 };
 
 template<class C>

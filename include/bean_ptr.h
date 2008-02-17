@@ -35,7 +35,6 @@ class real_bean : noncopyable {
 	private:
 		friend class Registry<C>;
 		real_bean(const bean_key _key, C* _obj); //only Registry can create the real_bean
-		//real_bean(const real_bean<C>& x);
 };
 
 template<class C>
@@ -45,8 +44,6 @@ class bean_ptr : public shared_res< real_bean<C> >
 	template<class Archive>
 	void hibernate(Archive & ar);
 
-	sqlid_t id;
-
 	friend class Registry<C>;
 	bean_ptr(bean_key k, real_bean<C>* rb);
 
@@ -54,6 +51,8 @@ class bean_ptr : public shared_res< real_bean<C> >
 		bean_ptr(bean_key k);
 
 		bean_ptr();
+
+		inline virtual ~bean_ptr();
 
 		operator bool() const;
 
