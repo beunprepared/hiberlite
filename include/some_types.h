@@ -122,6 +122,9 @@ HIBERLITE_DEF_INT_ATOM(unsigned short)
 
 HIBERLITE_DEF_DB_ATOM(long long, get_int64, sqlite3_bind_int64, "INTEGER")
 
+HIBERLITE_DEF_DB_ATOM(long int, get_int64, sqlite3_bind_int64, "INTEGER")
+HIBERLITE_DEF_DB_ATOM(unsigned long int, get_int64, sqlite3_bind_int64, "INTEGER")
+
 HIBERLITE_DEF_DB_ATOM(float, get_double, sqlite3_bind_double, "REAL")
 HIBERLITE_DEF_DB_ATOM(double, get_double, sqlite3_bind_double, "REAL")
 
