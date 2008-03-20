@@ -6,7 +6,7 @@ class shared_res;
 
 template<class C>
 class shared_cnt_obj_pair : noncopyable {
-private:
+protected:
 	friend class shared_res<C>;
 
 	C* res;
@@ -15,14 +15,11 @@ private:
 	explicit inline shared_cnt_obj_pair(C* r) : res(r), refCount(0) {}
 
 public:
-	HIBERLITE_HL_DBG_DO(int myId;)
-	HIBERLITE_HL_DBG_DO(std::set<int> users;)
 
 	inline C* getRes(){
 		return res;
 	}
-	inline ~shared_cnt_obj_pair(){
-		HIBERLITE_HL_DBG_DO(prnUsers();)
+	inline virtual ~shared_cnt_obj_pair(){
 		if(refCount)
 			throw std::logic_error("resource is busy");
 		delete res;
@@ -32,14 +29,10 @@ public:
 	}
 	inline void inc_pair_users(){
 		refCount++;
-		HIBERLITE_HL_DBG_DO(prnUsers();)
 	}
 	inline void dec_pair_users(){
 		refCount--;
-		HIBERLITE_HL_DBG_DO(prnUsers();)
 	}
-
-	HIBERLITE_HL_DBG_DO(void prnUsers(){})
 };
 
 template<class C>
@@ -71,7 +64,7 @@ public:
 
 	inline shared_res() : res(NULL) {}
 
-	inline shared_res(const shared_res<C>& x){
+	inline shared_res(const shared_res<C>& x) : res(NULL) {
 		takeRes(x.res);
 	}
 

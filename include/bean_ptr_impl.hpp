@@ -56,8 +56,10 @@ inline void real_bean<C>::loadLazy()
 }
 
 template<class C>
-bean_ptr<C>::bean_ptr(bean_key k, real_bean<C>* rb) : shared_res< real_bean<C> >(rb)
-{}
+bean_ptr<C>::bean_ptr(bean_key k, rb_pair<C>* para)
+{
+	takeRes(para);
+}
 
 template<class C>
 bean_ptr<C>::bean_ptr(const bean_ptr<C>& other) : shared_res< real_bean<C> >(other)
@@ -80,12 +82,6 @@ bean_ptr<C>::bean_ptr(bean_key k)
 template<class C>
 bean_ptr<C>::bean_ptr()
 {
-}
-
-template<class C>
-bean_ptr<C>::~bean_ptr(){
-	if( shared_res< real_bean<C> >::get_object() )
-		Registry<C>::dying( shared_res< real_bean<C> >::get_object()->get_key() );
 }
 
 template<class C>

@@ -56,6 +56,8 @@ void loadData()
 	vector< hiberlite::bean_ptr<Person> > v=db.getAllBeans<Person>();
 
 	cout << "found " << v.size() << " persons in the database\nhere's the first one:\n";
+	if(v.size())
+		v.resize(1);
 
 	cout << "name=" << v[0]->name << "\n";
 	cout << "age=" << v[0]->age << "\n";
