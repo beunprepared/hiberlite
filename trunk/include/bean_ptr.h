@@ -45,7 +45,7 @@ class bean_ptr : public shared_res< real_bean<C> >
 	void hibernate(Archive & ar);
 
 	friend class Registry<C>;
-	bean_ptr(bean_key k, real_bean<C>* rb);
+	bean_ptr(bean_key k, rb_pair<C>* rbpair);
 
 	sqlid_t tmp_id;
 
@@ -53,8 +53,6 @@ class bean_ptr : public shared_res< real_bean<C> >
 		bean_ptr(bean_key k);
 
 		bean_ptr();
-
-		inline virtual ~bean_ptr();
 
 		operator bool() const;
 
