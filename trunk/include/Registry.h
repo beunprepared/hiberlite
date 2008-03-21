@@ -19,7 +19,6 @@ protected:
 public:
 	inline bean_key get_key();
 	inline virtual ~rb_pair();
-
 };
 
 
