@@ -24,3 +24,5 @@ install :
 %.o : src/%.cpp
 	g++ -c $(CXXFLAGS) $< -o $@
 
+sample : sample.cpp libhiberlite.a
+	g++ $(CXXFLAGS) -L./ sample.cpp -o sample -lhiberlite $(LDFLAGS)
