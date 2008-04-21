@@ -7,11 +7,7 @@ real_bean<C>::real_bean(const bean_key _key, C* _obj) : key(_key), obj(_obj), fo
 template<class C>
 real_bean<C>::~real_bean()
 {
-	if(forgotten)
-		return;
-	if(!obj)
-		return;
-	Database::dbUpdate(key, *obj);
+	save();
 	delete obj;
 }
 
@@ -24,6 +20,15 @@ void real_bean<C>::destroy() {
 	forgotten=true;
 	obj=NULL;
 	key.id=Database::NULL_ID;
+}
+
+template<class C>
+void real_bean<C>::save() {
+	if(forgotten)
+		return;
+	if(!obj)
+		return;
+	Database::dbUpdate(key, *obj);
 }
 
 template<class C>
@@ -116,6 +121,11 @@ C* bean_ptr<C>::operator->() {
 template<class C>
 void bean_ptr<C>::destroy() {
 	shared_res< real_bean<C> >::get_object()->destroy();
+}
+
+template<class C>
+void bean_ptr<C>::save() {
+	shared_res< real_bean<C> >::get_object()->save();
 }
 
 template<class C>

@@ -46,33 +46,46 @@ void createDB()
 	}
 }
 
-void loadData()
+void printDB()
 {
 	hiberlite::Database db("sample.db");
 	db.registerBeanClass<Person>();
 
-	cout << "reading the DB\n";
+	cout << string(15,'=')+"\nreading the DB\n";
 
 	vector< hiberlite::bean_ptr<Person> > v=db.getAllBeans<Person>();
 
-	cout << "found " << v.size() << " persons in the database\nhere's the first one:\n";
-	if(v.size())
-		v.resize(1);
+	cout << "found " << v.size() << " persons in the database:\n";
 
-	cout << "name=" << v[0]->name << "\n";
-	cout << "age=" << v[0]->age << "\n";
-	cout << "bio={";
-	for(size_t i=0;i<v[0]->bio.size();i++)
-		i && cout << ", ", cout << v[0]->bio[i];
-	cout << "}\n";
-	cout << v[0]->name << " will be deleted.\n\n";
+	for(size_t j=0;j<v.size();j++){
+		cout << "[name=" << v[j]->name << "\t";
+		cout << "age=" << v[j]->age << "\t";
+		cout << "bio={";
+		for(size_t i=0;i<v[j]->bio.size();i++)
+			i && cout << ", ", cout << v[j]->bio[i];
+		cout << "}]\n";
+	}
+}
+
+void modifyDB()
+{
+	hiberlite::Database db("sample.db");
+	db.registerBeanClass<Person>();
+
+	vector< hiberlite::bean_ptr<Person> > v=db.getAllBeans<Person>();
+	cout << v[0]->name << " will be deleted.\n";
 	v[0].destroy();
+	cout << v[1]->name << " becomes 1 year older.\n\n";
+	v[1]->age+=1;
 }
 
 int main()
 {
 	createDB();
-	loadData();
-	loadData();
+	printDB();
+	modifyDB();
+	printDB();
+	modifyDB();
+	printDB();
 	return 0;
 }

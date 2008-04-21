@@ -6,9 +6,16 @@ namespace hiberlite{
 template<class C>
 void Database::dbDelete(bean_key key, C& bean)
 {
-	ChildKiller ck;
-	ck.killChildren(key,bean);
-	dbDeleteRows(key.con, Database::getClassName<C>(), HIBERLITE_PRIMARY_KEY_COLUMN, key.id);
+	try{
+		dbExecQuery(key.con,"ROLLBACK TRANSACTION;");
+	}catch(...){}
+	dbExecQuery(key.con,"BEGIN TRANSACTION;");
+
+		ChildKiller ck;
+		ck.killChildren(key,bean);
+		dbDeleteRows(key.con, Database::getClassName<C>(), HIBERLITE_PRIMARY_KEY_COLUMN, key.id);
+
+	dbExecQuery(key.con,"COMMIT TRANSACTION;");
 }
 
 template<class C>
@@ -23,10 +30,17 @@ void Database::dbDeleteRows(shared_connection con, std::string table, std::strin
 template<class C>
 void Database::dbUpdate(bean_key key, C& bean)
 {
-	ChildKiller ck;
-	ck.killChildren(key,bean);
-	BeanUpdater u;
-	u.update(key, bean);
+	try{
+		dbExecQuery(key.con,"ROLLBACK TRANSACTION;");
+	}catch(...){}
+	dbExecQuery(key.con,"BEGIN TRANSACTION;");
+
+		ChildKiller ck;
+		ck.killChildren(key,bean);
+		BeanUpdater u;
+		u.update(key, bean);
+
+	dbExecQuery(key.con,"COMMIT TRANSACTION;");
 }
 
 template<class C>

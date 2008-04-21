@@ -22,6 +22,8 @@ class real_bean : noncopyable {
 
 		bean_key get_key() const { return key; }
 
+		void save();
+
 		void destroy();
 		bool destroyed() const { return forgotten; }
 
@@ -59,6 +61,7 @@ class bean_ptr : public shared_res< real_bean<C> >
 		bean_ptr(const bean_ptr<C>& other);
 		bean_ptr<C>& operator=(const bean_ptr<C>& other);
 
+		void save();
 		void destroy();
 
 		bool destroyed() {
