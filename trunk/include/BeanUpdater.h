@@ -39,26 +39,39 @@ class Transformer{
 #define HIBERLITE_STRINGIFY_NUM(VALTYPE) \
 		static std::string toSQLiteValue(const VALTYPE &val){ \
 			char s[64];					\
-			int i=63;					\
-			s[i--]=0;					\
+			char* p=s+63;				\
+			*(p--)=0;					\
 			VALTYPE tmp=val;			\
 			bool needmin=0;				\
-			if(tmp<(VALTYPE)0)					\
+			if(tmp<(VALTYPE)0)			\
 				needmin=1,tmp*=-1;		\
 			do{							\
-				s[i--]='0' + (tmp%10);	\
+				*(p--)='0' + (tmp%10);	\
 				tmp/=10;				\
 			}while(tmp);				\
-			if(needmin) s[i--]='-';		\
-			return s+i+1;				\
+			if(needmin) *(p--)='-';		\
+			return p+1;					\
+		}
+
+#define HIBERLITE_STRINGIFY_UNSIGNED_NUM(VALTYPE) \
+		static std::string toSQLiteValue(const VALTYPE &val){ \
+			char s[64];					\
+			char* p=s+63;				\
+			*(p--)=0;					\
+			VALTYPE tmp=val;			\
+			do{							\
+				*(p--)='0' + (tmp%10);	\
+				tmp/=10;				\
+			}while(tmp);				\
+			return p+1;					\
 		}
 
 HIBERLITE_STRINGIFY_NUM(int)
-HIBERLITE_STRINGIFY_NUM(unsigned int)
+HIBERLITE_STRINGIFY_UNSIGNED_NUM(unsigned int)
 HIBERLITE_STRINGIFY_NUM(char)
 //HIBERLITE_STRINGIFY_NUM(unsigned char)
 HIBERLITE_STRINGIFY_NUM(long long int)
-HIBERLITE_STRINGIFY_NUM(unsigned long long int)
+HIBERLITE_STRINGIFY_UNSIGNED_NUM(unsigned long long int)
 #undef HIBERLITE_STRINGIFY_NUM
 
 		static std::string toSQLiteValue(const unsigned char &val){
