@@ -10,8 +10,9 @@ class sql_nvp{
 	public:
 		std::string name;
 		C& value;
+		std::string search_key;
 
-		sql_nvp(std::string _name, C& _value) : name(_name), value(_value) {}
+		sql_nvp(std::string _name, C& _value, std::string search="") : name(_name), value(_value), search_key(search) {}
 };
 
 template<class E,class Stream>
