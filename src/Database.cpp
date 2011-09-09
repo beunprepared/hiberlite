@@ -37,8 +37,10 @@ void Database::open(std::string fname)
 
 void Database::close()
 {
-	if(mx)
+	if(mx) {
 		delete mx;
+    mx=NULL;
+	}
 }
 
 std::vector<std::string> Database::checkModel()
