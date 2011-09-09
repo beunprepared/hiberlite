@@ -10,7 +10,7 @@ SQLiteSelect::SQLiteSelect(shared_connection _con, std::string query) : con(_con
 	sqlite3* db=con->getSQLite3Ptr();
 	const char* foob;
 	int rc=sqlite3_prepare_v2(db,query.c_str(),-1,&stmt_ptr,&foob);
-	database_error::assert(rc, con);
+	database_error::database_assert(rc, con);
 	statement=shared_stmt( new statement_ptr(stmt_ptr) );
 }
 
@@ -27,7 +27,7 @@ bool SQLiteSelect::step()
 		active=true;
 		return true;
 	}
-	database_error::assert(rc, con);
+	database_error::database_assert(rc, con);
 	throw database_error("really strange - sqlite3_step returns SQLITE_OK");
 }
 

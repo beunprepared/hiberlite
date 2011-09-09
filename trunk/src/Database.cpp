@@ -96,7 +96,7 @@ sqlid_t Database::allocId(shared_connection c, std::string table)
 	int rc=sqlite3_exec(c->getSQLite3Ptr(),query.c_str(),NULL, NULL, &err_msg );
 	if(err_msg)
 		throw database_error(err_msg);
-	database_error::assert(rc, c);
+	database_error::database_assert(rc, c);
 
 	return sqlite3_last_insert_rowid(c->getSQLite3Ptr());
 }
@@ -111,7 +111,7 @@ void Database::dbExecQuery(shared_connection con, std::string query)
 		sqlite3_free(err_msg);
 		throw database_error(msg);
 	}
-	database_error::assert(rc, con);
+	database_error::database_assert(rc, con);
 }
 
 sqlid_t Database::allocId(std::string table){
