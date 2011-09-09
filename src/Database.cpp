@@ -39,7 +39,7 @@ void Database::close()
 {
 	if(mx) {
 		delete mx;
-    mx=NULL;
+		mx=NULL;
 	}
 }
 
