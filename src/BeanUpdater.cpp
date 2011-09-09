@@ -47,7 +47,7 @@ void UpdateBean::commitRow(shared_connection con, sqlid_t rowid)
 		sqlite3* db=con->getSQLite3Ptr();
 		const char* foob;
 		int rc=sqlite3_prepare_v2(db,curRow()->query.c_str(),-1,&stmt_ptr,&foob);
-		database_error::assert(rc, con);
+		database_error::database_assert(rc, con);
 	}
 	shared_stmt statement( new statement_ptr(stmt_ptr) );
 
@@ -58,7 +58,7 @@ void UpdateBean::commitRow(shared_connection con, sqlid_t rowid)
 	{
 		int rc=sqlite3_step(statement->get_stmt());
 		if(rc!=SQLITE_DONE)
-			database_error::assert(rc, con);
+			database_error::database_assert(rc, con);
 	}
 
 
