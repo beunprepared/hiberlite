@@ -151,8 +151,6 @@ To remove an object from the database, call `bean_ptr::destroy()`:
 {{{
     bean_ptr<Person> p==db.loadBean<Person>(1);
     p.destroy();
-    if(!p.destroyed())
-        throw std::runtime_error("bug found. report issue please");
 }}}
 
 = Examples = 
